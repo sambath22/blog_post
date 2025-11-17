@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Update Article</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <style>
+      * {
+        font-family: "Poppins", sans-serif;
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        display: flex;
+        background-color: #f5f5f5;
+        min-height: 100vh;
+      }
+
+      /* MAIN CONTENT */
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        padding: 20px 40px;
+      }
+
+      /* TOPBAR */
+      .topbar {
+        background: #fff;
+        border-bottom: 1px solid #e2e2e2;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-radius: 10px;
+        margin-bottom: 30px;
+      }
+
+      .topbar .avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ec489a;
+        margin-left: 15px;
+      }
+
+      /* CARD */
+      .register-card {
+        background: #fff;
+        padding: 2.5rem 2rem;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        max-width: 600px;
+        margin: 0 auto;
+        animation: fadeIn 0.6s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .btn-primary {
+        background: linear-gradient(90deg, #a855f7, #ec489a);
+        border: none;
+        border-radius: 10px;
+        padding: 12px 0;
+        transition: 0.3s ease;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header text-center">
+        <img src="../assets/img/image.png" alt="Logo" />
+        Blog Post
+      </div>
+
+      <ul class="menu-sidebar">
+        <li><a href="../index.html">Dashboard</a></li>
+
+        <li>
+          <details open>
+            <summary>My Articles</summary>
+            <ul>
+              <li><a href="own_article.html">All Articles</a></li>
+              <li><a href="create-article.html">Create Article</a></li>
+            </ul>
+          </details>
+        </li>
+
+        <li><a href="categories.html">Category</a></li>
+      </ul>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <div class="text-end">
+          <div id="welcomeMessage" class="fw-semibold">Welcome...</div>
+          <div id="email" class="text-muted small">email@example.com</div>
+        </div>
+        <img
+          id="avatar"
+          class="avatar"
+          src="../assets/img/default-avatar.jpg"
+        />
+      </div>
+
+      <!-- UPDATE ARTICLE FORM -->
+      <div class="register-card">
+        <h1>Update Article</h1>
+
+        <form id="articleForm">
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input id="title" type="text" class="form-control" />
+            <div class="invalid-feedback" id="titleError">
+              Title is required.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Content</label>
+            <textarea id="content" class="form-control" rows="5"></textarea>
+            <div class="invalid-feedback" id="contentError">
+              Content is required.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select id="categoryId" class="form-select">
+              <option value="">Select Category</option>
+            </select>
+            <div class="invalid-feedback" id="categoryError">
+              Category is required.
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label">Upload Thumbnail</label>
+            <input
+              id="formFile"
+              type="file"
+              class="form-control"
+              accept="image/*"
+              onchange="previewNewThumbnail()"
+            />
+            <img
+              id="thumbnailPreview"
+              style="width: 300px; margin-top: 15px; border-radius: 12px"
+            />
+          </div>
+
+          <button
+            type="button"
+            onclick="updateArticle()"
+            class="btn btn-primary w-100 btn-lg"
+          >
+            Update
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      /* =======================
+       TOKEN FROM LOCALSTORAGE
+    ======================== */
+      const token = localStorage.getItem("token");
+      const articleId = localStorage.getItem("articleEdit");
+
+      if (!token) {
+        alert("Missing token. Please login again.");
+        window.location.href = "../login.html";
+      }
+
+      /* =======================
+       LOAD USER INFO ON TOPBAR
+    ======================== */
+      fetch("http://blogs.csm.linkpc.net/api/v1/auth/profile", {
+        headers: { Authorization: "Bearer " + token },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const user = data.data;
+
+          document.getElementById("welcomeMessage").innerText =
+            "Welcome, " + user.name;
+          document.getElementById("email").innerText = user.email;
+          document.getElementById("avatar").src =
+            user.avatar || "../assets/img/default-avatar.jpg";
+        });
+
+      /* =======================
+       LOAD CATEGORIES
+    ======================== */
+      function loadCategories() {
+        const select = document.getElementById("categoryId");
+
+        fetch("http://blogs.csm.linkpc.net/api/v1/categories?_per_page=100", {
+          headers: { Authorization: "Bearer " + token },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            select.innerHTML = '<option value="">Select Category</option>';
+            data.data.items.forEach((cat) => {
+              const opt = document.createElement("option");
+              opt.value = cat.id;
+              opt.textContent = cat.name;
+              select.appendChild(opt);
+            });
+          });
+      }
+
+      /* =======================
+       LOAD ARTICLE DATA
+    ======================== */
+      function loadArticleData() {
+        fetch(`http://blogs.csm.linkpc.net/api/v1/articles/${articleId}`, {
+          headers: { Authorization: "Bearer " + token },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const article = data.data;
+
+            document.getElementById("title").value = article.title;
+            document.getElementById("content").value = article.content;
+            document.getElementById("categoryId").value = article.category.id;
+            document.getElementById("thumbnailPreview").src = article.thumbnail;
+          });
+      }
+
+      /* Thumbnail Preview */
+      function previewNewThumbnail() {
+        const file = document.getElementById("formFile").files[0];
+        if (file) {
+          document.getElementById("thumbnailPreview").src =
+            URL.createObjectURL(file);
+        }
+      }
+
+      /* =======================
+       UPDATE ARTICLE
+    ======================== */
+      function updateArticle() {
+        const title = document.getElementById("title").value.trim();
+        const content = document.getElementById("content").value.trim();
+        const categoryId = document.getElementById("categoryId").value;
+
+        if (!title || !content || !categoryId) {
+          if (!title)
+            document.getElementById("titleError").style.display = "block";
+          if (!content)
+            document.getElementById("contentError").style.display = "block";
+          if (!categoryId)
+            document.getElementById("categoryError").style.display = "block";
+          return;
+        }
+
+        const bodyData = { title, content, categoryId: Number(categoryId) };
+
+        fetch(`http://blogs.csm.linkpc.net/api/v1/articles/${articleId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify(bodyData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (!data.data) return alert("Update failed!");
+
+            const file = document.getElementById("formFile").files[0];
+
+            if (file) {
+              const fd = new FormData();
+              fd.append("thumbnail", file);
+
+              return fetch(
+                `http://blogs.csm.linkpc.net/api/v1/articles/${articleId}/thumbnail`,
+                {
+                  method: "POST",
+                  headers: { Authorization: "Bearer " + token },
+                  body: fd,
+                }
+              ).then((r) => {
+                if (r.ok) window.location.href = "./all_articles.html";
+                else alert("Thumbnail upload failed.");
+              });
+            } else {
+              window.location.href = "./all_articles.html";
+            }
+          })
+          .catch((err) => console.error(err));
+      }
+
+      /* INIT */
+      document.addEventListener("DOMContentLoaded", () => {
+        loadCategories();
+        loadArticleData();
+      });
+    </script>
+  </body>
+</html>

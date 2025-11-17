@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        display: flex;
+        background-color: #fafafa;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 260px;
+        background: linear-gradient(
+          180deg,
+          #c38dff 0%,
+          #e879f9 50%,
+          #ec4899 100%
+        );
+        color: #fff;
+        /* padding: 2rem 1.5rem; */
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        height: 100vh;
+        overflow-y: auto;
+      }
+
+      .sidebar h3 {
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 0.3rem;
+      }
+
+      .sidebar p {
+        text-align: center;
+        font-size: 0.85rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+      }
+
+      .sidebar a {
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0.9rem 1.2rem;
+        text-decoration: none;
+        font-weight: 500;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .sidebar a:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateX(5px);
+      }
+
+      .sidebar a.active {
+        background: rgba(255, 255, 255, 0.25);
+        font-weight: 600;
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        margin-left: 260px;
+        padding: 2rem;
+      }
+
+      /* Topbar */
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fff;
+        padding: 20px 28px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 30px;
+      }
+
+      .topbar-avatar {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        border: 3px solid #e879f9;
+        object-fit: cover;
+      }
+
+      /* Profile Card */
+      .profile-card {
+        background: #fff;
+        border-radius: 25px;
+        padding: 40px 30px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        text-align: center;
+      }
+
+      .profile-avatar {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid #ec4899b5;
+        margin-bottom: 20px;
+        cursor: pointer;
+      }
+
+      input.form-control {
+        border-radius: 12px;
+        padding: 10px 15px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #c084fc, #f472b6);
+        border: none;
+        border-radius: 30px;
+        font-weight: 600;
+      }
+
+      .text-danger {
+        font-size: 0.8rem;
+        margin-top: 3px;
+      }
+
+      /* Success Toast */
+      .success-toast {
+        position: fixed;
+        bottom: 25px;
+        left: 30px;
+        background: #e7f7ea;
+        border: 1px solid #b5e1be;
+        color: #1b7c34;
+        padding: 14px 20px;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(15px);
+        transition: all 0.35s ease;
+        z-index: 9999;
+      }
+
+      .success-toast.show {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      .success-toast .icon {
+        background: #1b7c34;
+        color: #fff;
+        width: 22px;
+        height: 22px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header text-center">
+        <img src="../assets/img/image.png" alt="Logo" />
+        Blog Post
+      </div>
+      <ul class="menu-sidebar">
+        <li>
+          <a href="../index.html">
+            <svg width="24" height="24" fill="none">
+              <path
+                d="M21 12C21 16.97 16.97 21 12 21C7.03 21 3 16.97 3 12M21 12C21 7.03 16.97 3 12 3M21 12H19M3 12C3 7.03 7.03 3 12 3M3 12H5M12 3V5M13.32 10.5C12.97 10.19 12.51 10 12 10C10.89 10 10 10.89 10 12C10 13.1 10.89 14 12 14C13.1 14 14 13.1 14 12C14 11.4 13.74 10.87 13.32 10.5ZM13.32 10.5L15.82 8"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              ></path>
+            </svg>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <details open>
+            <summary>
+              <svg width="20" height="20" fill="none">
+                <path
+                  d="M7 25V2.005C7 2.005 7 1 8 1H30C30 1 31 1.005 31 2.005V28.005C31 28.005 31 31 28 31H4C4 31 1 31.005 1 27.005V12.005C1 12.005 1 11 2 11H4M13 7H18M13 11H25M13 15H25M13 19H25M13 23H25"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+              My Articles
+            </summary>
+            <ul>
+              <li>
+                <a href="own_article.html" class="menu-active">All Articles</a>
+              </li>
+              <li><a href="create-article.html">Create Article</a></li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <a href="categories.html">
+            <svg width="20" height="20" fill="none">
+              <path
+                d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10ZM17 10H19C21 10 22 9 22 7V5C22 3 21 2 19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10ZM17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22ZM5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19C2 21 3 22 5 22Z"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </svg>
+            Category
+          </a>
+        </li>
+      </ul>
+    </aside>
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- UPDATED TOPBAR -->
+      <div class="topbar">
+        <!-- Left side -->
+        <div>
+          <h4 class="mb-1 fw-semibold">Profile Settings</h4>
+          <p class="text-muted mb-0" style="font-size: 14px">
+            Manage your information here
+          </p>
+        </div>
+
+        <!-- Right side -->
+        <div class="d-flex align-items-center">
+          <div class="text-end me-2 me-md-2">
+            <h6 id="topUserName" class="mb-0 fw-semibold">Loading...</h6>
+            <small id="topUserEmail" class="text-muted">Loading...</small>
+          </div>
+          <img
+            id="topbarAvatar"
+            class="topbar-avatar"
+            src="https://via.placeholder.com/60"
+          />
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <img
+          id="profileAvatar"
+          class="profile-avatar"
+          src="https://via.placeholder.com/130"
+          onclick="document.getElementById('avatarInput').click()"
+        />
+        <input
+          type="file"
+          id="avatarInput"
+          accept="image/*"
+          style="display: none"
+        />
+
+        <form onsubmit="updateProfile(event)" class="mt-3 text-start">
+          <div class="mb-3">
+            <label>First Name</label>
+            <input type="text" id="firstName" class="form-control" />
+            <small id="firstNameError" class="text-danger"></small>
+          </div>
+
+          <div class="mb-3">
+            <label>Last Name</label>
+            <input type="text" id="lastName" class="form-control" />
+            <small id="lastNameError" class="text-danger"></small>
+          </div>
+
+          <div class="mb-3">
+            <label>Email</label>
+            <input type="email" id="inputEmail" class="form-control" />
+            <small id="emailError" class="text-danger"></small>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100 mt-2">
+            💾 Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="success-toast shadow-sm">
+      <span class="icon">✔️</span>
+      <span id="successMessage">Profile updated successfully!</span>
+    </div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+
+    <script>
+      const BASE_URL = "http://blogs.csm.linkpc.net/api/v1";
+      let avatarFile = null;
+
+      function showSuccessToast(message) {
+        const toast = document.getElementById("successToast");
+        const text = document.getElementById("successMessage");
+        text.textContent = message;
+
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 3000);
+      }
+
+      async function loadProfile() {
+        try {
+          const res = await fetch(`${BASE_URL}/auth/profile`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.message);
+
+          const profile = data.data;
+
+          const avatarUrl =
+            (profile.avatar && `${profile.avatar}?t=${Date.now()}`) ||
+            "https://via.placeholder.com/150";
+
+          firstName.value = profile.firstName || "";
+          lastName.value = profile.lastName || "";
+          inputEmail.value = profile.email || "";
+
+          topUserName.textContent = `${profile.firstName} ${profile.lastName}`;
+          topUserEmail.textContent = profile.email;
+
+          profileAvatar.src = avatarUrl;
+          topbarAvatar.src = avatarUrl;
+        } catch (err) {
+          alert("Failed to load profile");
+        }
+      }
+
+      document.getElementById("avatarInput").onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        avatarFile = file;
+        profileAvatar.src = URL.createObjectURL(file);
+      };
+
+      async function updateProfile(e) {
+        e.preventDefault();
+
+        firstNameError.textContent = "";
+        lastNameError.textContent = "";
+        emailError.textContent = "";
+
+        let valid = true;
+
+        // Regex to allow letters only (uppercase and lowercase)
+        const lettersOnly = /^[A-Za-z]+$/;
+
+        if (firstName.value.trim() === "") {
+          firstNameError.textContent = "First name is required.";
+          valid = false;
+        } else if (!lettersOnly.test(firstName.value.trim())) {
+          firstNameError.textContent = "First name can only contain letters.";
+          valid = false;
+        }
+
+        if (lastName.value.trim() === "") {
+          lastNameError.textContent = "Last name is required.";
+          valid = false;
+        } else if (!lettersOnly.test(lastName.value.trim())) {
+          lastNameError.textContent = "Last name can only contain letters.";
+          valid = false;
+        }
+
+        const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        if (!gmailPattern.test(inputEmail.value)) {
+          emailError.textContent = "Email must be a valid Gmail address.";
+          valid = false;
+        }
+
+        if (!valid) return;
+
+        const profileData = {
+          firstName: firstName.value,
+          lastName: lastName.value,
+          email: inputEmail.value,
+        };
+
+        try {
+          const res = await fetch(`${BASE_URL}/profile`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(profileData),
+          });
+
+          if (!res.ok) throw new Error("Profile update failed");
+
+          topUserName.textContent = `${firstName.value} ${lastName.value}`;
+          topUserEmail.textContent = inputEmail.value;
+        } catch (err) {
+          return alert(err.message);
+        }
+
+        if (avatarFile) {
+          const formData = new FormData();
+          formData.append("avatar", avatarFile);
+
+          try {
+            const res = await fetch(`${BASE_URL}/profile/avatar`, {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+              body: formData,
+            });
+
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message);
+
+            const newAvatar = `${data.data.avatar}?t=${Date.now()}`;
+            profileAvatar.src = newAvatar;
+            topbarAvatar.src = newAvatar;
+          } catch (err) {
+            alert(err.message);
+          }
+        }
+
+        showSuccessToast("Profile updated successfully!");
+      }
+
+      loadProfile();
+    </script>
+  </body>
+</html>

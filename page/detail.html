@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Article Detail</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Styles -->
+    <style>
+      body {
+        background-color: #f3f4f6;
+        font-family: "Inter", "Segoe UI", Roboto, sans-serif;
+        color: #1f1f1f;
+      }
+
+      .container {
+        max-width: 850px;
+        margin-top: 70px;
+        margin-bottom: 80px;
+      }
+
+      /* Article Card */
+      .article-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 35px;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+        transition: 0.3s ease;
+      }
+
+      .article-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+      }
+
+      .article-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 14px;
+        margin-bottom: 25px;
+      }
+
+      .article-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .article-meta {
+        color: #6b7280;
+        font-size: 0.9rem;
+        margin-bottom: 22px;
+      }
+
+      .article-content {
+        line-height: 1.8;
+        font-size: 1.08rem;
+        color: #333;
+        white-space: pre-line;
+      }
+
+      /* Back Button */
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        color: #374151;
+        margin-bottom: 25px;
+        transition: 0.2s;
+      }
+
+      .back-btn:hover {
+        color: #7c3aed;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Back Button -->
+      <a href="../index.html" class="back-btn">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="bi bi-arrow-left"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M15 8a.5.5 0 0 1-.5.5H2.707l3.147 
+          3.146a.5.5 0 0 1-.708.708l-4-4a.498.498 
+          0 0 1-.146-.35v-.008a.498.498 0 0 
+          1 .146-.35l4-4a.5.5 0 1 1 
+          .708.708L2.707 7.5H14.5A.5.5 0 0 1 15 8z"
+          />
+        </svg>
+        Back to Dashboard
+      </a>
+
+      <!-- Article Card -->
+      <div class="article-card" id="article">
+        <div class="text-center text-muted">Loading article...</div>
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+      // Load token from localStorage (no hardcoding)
+      const API_TOKEN = localStorage.getItem("token");
+
+      // Get Article ID from URL
+      const params = new URLSearchParams(window.location.search);
+      const articleId = params.get("id");
+
+      async function getArticle(id) {
+        const articleEl = document.getElementById("article");
+
+        if (!API_TOKEN) {
+          articleEl.innerHTML = `
+          <div class="text-danger text-center">
+            Missing token. Please login again.
+          </div>
+        `;
+          return;
+        }
+
+        if (!id) {
+          articleEl.innerHTML = `
+          <div class="text-warning text-center">
+            No article ID found.
+          </div>
+        `;
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `http://blogs.csm.linkpc.net/api/v1/articles/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${API_TOKEN}`,
+              },
+            }
+          );
+
+          if (!response.ok)
+            throw new Error(
+              `Unable to load article (Status: ${response.status})`
+            );
+
+          const { data } = await response.json();
+
+          if (!data) throw new Error("Article data missing.");
+
+          const imgSrc = data.thumbnail || "../assets/img/default.jpg";
+
+          /* Parse Quill content safely */
+          let contentText = "";
+          try {
+            const parsed = JSON.parse(data.content);
+            contentText = parsed.ops?.map((op) => op.insert).join("") || "";
+          } catch {
+            contentText = data.content;
+          }
+
+          articleEl.innerHTML = `
+          <img src="${imgSrc}" class="article-image" alt="Article Image">
+
+          <h2 class="article-title">${data.title}</h2>
+
+          <div class="article-meta">
+            By ${data.author?.name || "Unknown"} • 
+            ${new Date(data.created_at).toLocaleDateString()}
+          </div>
+
+          <div class="article-content">${contentText}</div>
+        `;
+        } catch (error) {
+          console.error(error);
+          articleEl.innerHTML = `
+          <div class="text-danger text-center">
+            ${error.message}
+          </div>
+        `;
+        }
+      }
+
+      // Load Article
+      getArticle(articleId);
+    </script>
+  </body>
+</html>
