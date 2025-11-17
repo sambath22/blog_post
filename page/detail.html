@@ -180,8 +180,8 @@
           <h2 class="article-title">${data.title}</h2>
 
           <div class="article-meta">
-            By ${data.author?.name || "Unknown"} • 
-            ${new Date(data.created_at).toLocaleDateString()}
+            By ${data.creator?.firstName || "Unknown"} • 
+            ${new Date(data.createdAt).toLocaleDateString()}
           </div>
 
           <div class="article-content">${contentText}</div>

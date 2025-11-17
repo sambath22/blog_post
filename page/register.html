@@ -311,6 +311,7 @@
         </form>
       </div>
     </div>
+    <!-- <a href="login.html"></a> -->
 
     <!-- Modal -->
     <div id="successModal" class="modal">
@@ -425,12 +426,10 @@
         })
           .then((res) => res.json())
           .then((data) => {
-            if (data.data && data.data.token) {
-              localStorage.setItem("token", data.data.token);
-              showModal();
-              document.getElementById("signupForm").reset();
+            if (data.result == true) {
+              location.href = "login.html";
             } else {
-              alert("❌ Registration failed!");
+              alert("login fail");
             }
           })
           .catch((err) => {
