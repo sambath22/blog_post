@@ -4,114 +4,145 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create Article</title>
+
+    <!-- Bootstrap -->
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../assets/css/style.css" />
+
     <style>
-      /* Form card */
-      .register-card {
-        background: #fff;
-        padding: 2.5rem 2rem;
-        border-radius: 15px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        max-width: 600px;
-        width: 100%;
-        margin: 0 auto;
-        animation: fadeIn 0.6s ease;
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f5f5;
       }
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+
+      .sidebar {
+        width: 220px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        padding: 2rem 1rem;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
       }
-      .register-card h1 {
-        font-size: 1.8rem;
-        margin-bottom: 1.5rem;
+      .sidebar-header {
+        font-weight: bold;
+        margin-bottom: 1rem;
         text-align: center;
-        color: #4b5563;
       }
-      .register-card label {
-        font-weight: 500;
+      .menu-sidebar {
+        list-style: none;
+        padding: 0;
+      }
+      .menu-sidebar li {
+        margin-bottom: 1rem;
+      }
+      .menu-sidebar a {
         color: #374151;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
       }
-      .register-card input,
-      .register-card textarea,
-      .register-card select {
-        border-radius: 10px;
-        border: 1px solid #d1d5db;
-        padding: 12px;
-        transition: all 0.3s ease;
-      }
-      .register-card input:focus,
-      .register-card textarea:focus,
-      .register-card select:focus {
-        border-color: #a855f7;
-        box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
-      }
-      .register-card .btn-primary {
-        background: linear-gradient(90deg, #a855f7, #ec489a);
-        border: none;
-        border-radius: 10px;
+      .menu-active {
         font-weight: 600;
-        padding: 12px 0;
-        font-size: 1rem;
-        transition: all 0.3s ease;
+        color: #a855f7;
       }
-      .register-card .btn-primary:hover {
-        opacity: 0.9;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(236, 72, 154, 0.3);
+
+      .main-content {
+        margin-left: 240px;
+        padding: 2rem;
       }
-      .invalid-feedback {
-        display: none;
-        color: #dc2626;
-        font-size: 0.875rem;
-        margin-top: 5px;
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+      .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .create-card {
+        background: #fff;
+        border: 1px solid gray;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+      .create-card h2 {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      .create-card p {
+        color: #6b7280;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-control,
+      .form-select {
+        border-radius: 8px;
+        padding: 12px;
+      }
+      .is-invalid {
+        border-color: #dc2626 !important;
+        box-shadow: 0 0 0 0.2rem rgba(220, 38, 38, 0.25);
+      }
+      .is-valid {
+        border-color: #22c55e !important;
+        box-shadow: 0 0 0 0.2rem rgba(34, 197, 94, 0.25);
+      }
+
+      .btn-publish {
+        background-color: #4f46e5;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 12px 20px;
+        transition: 0.3s;
+      }
+      .btn-publish:hover {
+        background-color: #4338ca;
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        color: #4b5563;
+        text-decoration: none;
       }
     </style>
   </head>
   <body>
     <!-- Sidebar -->
     <aside class="sidebar">
-      <div class="sidebar-header text-center">
-        <img src="../assets/img/image.png" alt="Logo" />
-        Blog Post
+      <div class="sidebar-header">
+        <img src="../assets/img/image.png" alt="Logo" /> Blog Post
       </div>
       <ul class="menu-sidebar">
         <li>
-          <a href="../index.html">
-            <svg width="24" height="24" fill="none">
-              <path
-                d="M21 12C21 16.97 16.97 21 12 21C7.03 21 3 16.97 3 12M21 12C21 7.03 16.97 3 12 3M21 12H19M3 12C3 7.03 7.03 3 12 3M3 12H5M12 3V5M13.32 10.5C12.97 10.19 12.51 10 12 10C10.89 10 10 10.89 10 12C10 13.1 10.89 14 12 14C13.1 14 14 13.1 14 12C14 11.4 13.74 10.87 13.32 10.5ZM13.32 10.5L15.82 8"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              ></path>
-            </svg>
-            Dashboard
-          </a>
+          <a href="../index.html"><i class="bi bi-grid-fill"></i> Dashboard</a>
         </li>
         <li>
           <details open>
-            <summary>
-              <svg width="20" height="20" fill="none">
-                <path
-                  d="M7 25V2.005C7 2.005 7 1 8 1H30C30 1 31 1.005 31 2.005V28.005C31 28.005 31 31 28 31H4C4 31 1 31.005 1 27.005V12.005C1 12.005 1 11 2 11H4M13 7H18M13 11H25M13 15H25M13 19H25M13 23H25"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-              My Articles
-            </summary>
+            <summary><i class="bi bi-file-text-fill"></i> My Articles</summary>
             <ul>
               <li>
                 <a href="own_article.html" class="menu-active">All Articles</a>
@@ -121,32 +152,7 @@
           </details>
         </li>
         <li>
-          <a href="categories.html">
-            <svg width="20" height="20" fill="none">
-              <path
-                d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10ZM17 10H19C21 10 22 9 22 7V5C22 3 21 2 19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10ZM17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22ZM5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19C2 21 3 22 5 22Z"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-            Category
-          </a>
-        </li>
-        <li>
-          <a href="../page/profile.html">
-            <svg width="20" height="20" fill="none">
-              <path
-                d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-            Profile
-          </a>
+          <a href="categories.html"><i class="bi bi-tags-fill"></i> Category</a>
         </li>
       </ul>
     </aside>
@@ -161,16 +167,17 @@
         <img class="avatar" id="avatar" src="" />
       </div>
 
-      <div class="register-card">
-        <h1>Create Article</h1>
-        <form id="articleForm">
+      <div class="create-card">
+        <h2>Create Article</h2>
+        <p>Compose a new article and publish it to your platform.</p>
+        <form id="articleForm" novalidate>
           <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
+            <label for="title" class="form-label">Title *</label>
             <input
               type="text"
               class="form-control"
               id="title"
-              placeholder="Enter title"
+              placeholder="Title of the article"
             />
             <div class="invalid-feedback" id="titleError">
               Title is required.
@@ -178,44 +185,47 @@
           </div>
 
           <div class="mb-3">
-            <label for="content" class="form-label">Content</label>
-            <textarea
-              class="form-control"
-              id="content"
-              rows="5"
-              placeholder="Enter content"
-            ></textarea>
-            <div class="invalid-feedback" id="contentError">
-              Content is required.
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="categoryId" class="form-label">Category</label>
+            <label for="categoryId" class="form-label">Category *</label>
             <select class="form-select" id="categoryId">
-              <option value="">Select Category</option>
+              <option value="">Loading categories...</option>
             </select>
             <div class="invalid-feedback" id="categoryError">
               Category is required.
             </div>
           </div>
 
-          <div class="mb-4">
-            <label for="formFile" class="form-label">Upload Thumbnail</label>
+          <div class="mb-3">
+            <label for="formFile" class="form-label"
+              >Thumbnail (Optional)</label
+            >
             <input
               class="form-control"
               type="file"
               id="formFile"
               accept="image/*"
             />
-            <div class="invalid-feedback" id="fileError">
-              Thumbnail is required.
+          </div>
+
+          <div class="mb-3">
+            <label for="content" class="form-label">Content *</label>
+            <textarea
+              class="form-control"
+              id="content"
+              rows="8"
+              placeholder="Write content here..."
+            ></textarea>
+            <div class="invalid-feedback" id="contentError">
+              Content must be at least 10 characters.
             </div>
           </div>
-          <div class="d-grid">
+
+          <div class="d-flex justify-content-between align-items-center">
+            <a href="own_article.html" class="back-link"
+              ><i class="bi bi-arrow-left"></i> Back to Articles</a
+            >
             <button
               type="button"
-              class="btn btn-primary btn-lg"
+              class="btn btn-publish"
               onclick="createArticle()"
             >
               Publish Now
@@ -226,17 +236,13 @@
     </div>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          alert("You must login first!");
-          window.location.href = "login.html";
-          return;
-        }
+      const token = localStorage.getItem("token");
+      if (!token) window.location.href = "login.html";
 
+      document.addEventListener("DOMContentLoaded", () => {
         // Load profile
         fetch("http://blogs.csm.linkpc.net/api/v1/auth/profile", {
-          headers: { Authorization: "Bearer " + token },
+          headers: { Authorization: `Bearer ${token}` },
         })
           .then((res) => res.json())
           .then((data) => {
@@ -261,7 +267,7 @@
           .then((data) => {
             categorySelect.innerHTML =
               '<option value="">Select Category</option>';
-            if (data.data.items && data.data.items.length > 0) {
+            if (data.data.items.length) {
               data.data.items.forEach((cat) => {
                 const option = document.createElement("option");
                 option.value = cat.id;
@@ -269,97 +275,126 @@
                 categorySelect.appendChild(option);
               });
             } else {
-              const option = document.createElement("option");
-              option.textContent = "No categories found";
-              option.disabled = true;
-              categorySelect.appendChild(option);
+              categorySelect.innerHTML =
+                "<option disabled>No categories found</option>";
             }
           })
-          .catch((err) => {
-            console.error(err);
+          .catch(() => {
             categorySelect.innerHTML =
               "<option disabled selected>Failed to load categories</option>";
           });
-      });
 
-      function showSuccessToast(message) {
-        const toast = document.getElementById("successToast");
-        const text = document.getElementById("successMessage");
-        text.textContent = message;
+        const titleEl = document.getElementById("title");
+        const contentEl = document.getElementById("content");
+        const categoryEl = document.getElementById("categoryId");
+        const fileEl = document.getElementById("formFile");
 
-        toast.classList.add("show");
-        setTimeout(() => toast.classList.remove("show"), 3000);
-      }
+        function validateField(
+          el,
+          errorId,
+          validatorFn,
+          message = "This field is required."
+        ) {
+          const value = el.value;
+          const errorEl = document.getElementById(errorId);
+          if (!validatorFn(value)) {
+            el.classList.add("is-invalid");
+            el.classList.remove("is-valid");
+            errorEl.textContent = message;
+            errorEl.style.display = "block";
+            return false;
+          } else {
+            el.classList.remove("is-invalid");
+            el.classList.add("is-valid");
+            errorEl.style.display = "none";
+            return true;
+          }
+        }
 
-      function createArticle() {
-        const token = localStorage.getItem("token");
-        if (!token) return;
-
-        const title = document.getElementById("title").value.trim();
-        const content = document.getElementById("content").value.trim();
-        const categoryId = document.getElementById("categoryId").value;
-        const thumbnail = document.getElementById("formFile").files[0];
-
-        // Reset error messages
-        ["titleError", "contentError", "categoryError", "fileError"].forEach(
-          (id) => (document.getElementById(id).style.display = "none")
+        titleEl.addEventListener("input", () =>
+          validateField(titleEl, "titleError", (val) => val.trim() !== "")
+        );
+        contentEl.addEventListener("input", () =>
+          validateField(
+            contentEl,
+            "contentError",
+            (val) => val.trim().length >= 10,
+            "Content must be at least 10 characters."
+          )
+        );
+        categoryEl.addEventListener("change", () =>
+          validateField(categoryEl, "categoryError", (val) => val !== "")
         );
 
-        let valid = true;
-        if (!title) {
-          document.getElementById("titleError").style.display = "block";
-          valid = false;
-        }
-        if (!content || content.length < 10) {
-          const cErr = document.getElementById("contentError");
-          cErr.textContent = "Content must be at least 10 characters.";
-          cErr.style.display = "block";
-          valid = false;
-        }
-        if (!categoryId) {
-          document.getElementById("categoryError").style.display = "block";
-          valid = false;
-        }
-        if (!thumbnail) {
-          document.getElementById("fileError").style.display = "block";
-          valid = false;
-        }
-        if (!valid) return;
+        window.createArticle = () => {
+          const titleValid = validateField(
+            titleEl,
+            "titleError",
+            (val) => val.trim() !== ""
+          );
+          const contentValid = validateField(
+            contentEl,
+            "contentError",
+            (val) => val.trim().length >= 10,
+            "Content must be at least 10 characters."
+          );
+          const categoryValid = validateField(
+            categoryEl,
+            "categoryError",
+            (val) => val !== ""
+          );
 
-        // Create article
-        fetch("http://blogs.csm.linkpc.net/api/v1/articles", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-          body: JSON.stringify({
-            title,
-            content,
-            categoryId: Number(categoryId),
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.data && data.data.id) {
-              const formData = new FormData();
-              formData.append("thumbnail", thumbnail);
-              return fetch(
-                `http://blogs.csm.linkpc.net/api/v1/articles/${data.data.id}/thumbnail`,
-                {
-                  method: "POST",
-                  headers: { Authorization: "Bearer " + token },
-                  body: formData,
+          if (!(titleValid && contentValid && categoryValid)) return;
+
+          const title = titleEl.value.trim();
+          const content = contentEl.value.trim();
+          const categoryId = categoryEl.value;
+          const thumbnail = fileEl.files[0];
+
+          fetch("http://blogs.csm.linkpc.net/api/v1/articles", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              title,
+              content,
+              categoryId: Number(categoryId),
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.data && data.data.id) {
+                // Upload thumbnail if exists
+                if (thumbnail) {
+                  const formData = new FormData();
+                  formData.append("thumbnail", thumbnail);
+                  return fetch(
+                    `http://blogs.csm.linkpc.net/api/v1/articles/${data.data.id}/thumbnail`,
+                    {
+                      method: "POST",
+                      headers: { Authorization: `Bearer ${token}` },
+                      body: formData,
+                    }
+                  );
+                } else {
+                  return Promise.resolve({ ok: true });
                 }
-              );
-            } else throw new Error("Failed to create article");
-          })
-          .then((resThumb) => {
-            if (resThumb.ok) window.location.href = "../test-own.html";
-            else alert("Thumbnail upload failed.");
-          })
-          .catch((err) => alert(err.message));
-      }
+              } else throw new Error("Failed to create article");
+            })
+            .then((resThumb) => {
+              if (resThumb.ok) {
+                // Notify dashboard page to reload articles
+                localStorage.setItem("newArticleCreated", "1");
+                window.location.href = "./own_article.html"; // redirect after creation
+              } else {
+                alert("Thumbnail upload failed.");
+              }
+            })
+            .catch((err) => alert(err.message));
+        };
+      });
     </script>
   </body>
 </html>

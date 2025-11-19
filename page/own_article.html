@@ -82,20 +82,6 @@
             Category
           </a>
         </li>
-        <li>
-          <a href="../page/profile.html">
-            <svg width="20" height="20" fill="none">
-              <path
-                d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-            Profile
-          </a>
-        </li>
       </ul>
     </aside>
     <!-- Main Content -->
@@ -130,13 +116,15 @@
         </table>
       </div>
     </div>
+    <!-- <a href="edit-ariticle.html"></a> -->
 
     <script>
+      // ============================
+      // 1. Redirect If Not Logged In
+      // ============================
       const token = localStorage.getItem("token");
-
       if (!token) {
-        alert("Please login first!");
-        window.location.href = "../login.html";
+        window.location.href = "login.html";
       }
 
       // ================= LOAD PROFILE =================
@@ -192,7 +180,8 @@
 
         let rows = "";
         list.forEach((article) => {
-          const catName = categoryMap[article.categoryId] || "N/A";
+          // const catName = categoryMap[article.category?.name] || "N/A";
+          const catName = article.category?.name || "N/A";
 
           rows += `
           <tr>
@@ -203,7 +192,7 @@
             <td>${catName}</td>
             <td>${new Date(article.createdAt).toLocaleDateString()}</td>
             <td>
-              <a href="./edit-article.html?id=${
+              <a href="edit-ariticle.html?id=${
                 article.id
               }" class="btn btn-sm"><i class="bi bi-pencil-square"></i></a>
               <button onclick="deleteArticle('${

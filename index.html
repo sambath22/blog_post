@@ -4,9 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Articles Dashboard</title>
+
+    <!-- Bootstrap -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
@@ -15,50 +21,59 @@
     <link rel="stylesheet" href="assets/css/style.css" />
 
     <style>
-      /* Articles container */
+      body {
+        font-family: "Poppins", sans-serif;
+      }
       .content-wrapper {
         padding: 40px;
       }
-
       .content-wrapper h4 {
         color: #8b5cf6;
         font-weight: 600;
-        /* margin-bottom: 1rem; */
       }
-
-      /* Article cards */
+      .search-container {
+        width: 100%;
+        margin: 25px 0;
+      }
+      .search-input {
+        width: 100%;
+        padding: 14px 18px;
+        font-size: 1rem;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        transition: 0.3s;
+      }
+      .search-input:focus {
+        border-color: #a855f7;
+        box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+      }
       .card {
         border: none;
         border-radius: 15px;
         overflow: hidden;
-        transition: all 0.3s ease;
+        transition: 0.3s;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         cursor: pointer;
         background: #fff;
       }
-
       .card:hover {
         transform: translateY(-5px);
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
       }
-
       .card-img-top {
         height: 180px;
         object-fit: cover;
-        border-top-left-radius: 15px;
-        border-top-right-radius: 15px;
       }
-
-      .card-body {
-        padding: 1rem 1.25rem;
-      }
-
       .card-title {
         font-weight: 600;
         color: #333;
         font-size: 1.05rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Limit to 3 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
-
       .card-text {
         color: #666;
         font-size: 0.9rem;
@@ -68,8 +83,6 @@
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
       }
-
-      /* Load More button */
       .btn-gradient {
         background: linear-gradient(90deg, #c084fc, #ec489a);
         color: #fff;
@@ -77,13 +90,11 @@
         padding: 10px 30px;
         border-radius: 8px;
         font-weight: 600;
-        transition: all 0.3s ease;
+        transition: 0.3s;
       }
-
       .btn-gradient:hover {
         opacity: 0.9;
         transform: translateY(-2px);
-        box-shadow: 0 4px 10px rgba(236, 72, 154, 0.3);
       }
     </style>
   </head>
@@ -91,38 +102,16 @@
   <body>
     <!-- Sidebar -->
     <aside class="sidebar">
-      <div class="sidebar-header">
-        <img src="assets/img//blog.png" alt="Logo" />
-        Blog Post
+      <div class="sidebar-header text-center">
+        <img src="assets/img/image.png" alt="Logo" /> Blog Post
       </div>
       <ul class="menu-sidebar">
-        <li class="active">
-          <a href="index.html">
-            <svg width="24" height="24" fill="none">
-              <path
-                d="M21 12C21 16.97 16.97 21 12 21C7.03 21 3 16.97 3 12M21 12C21 7.03 16.97 3 12 3M21 12H19M3 12C3 7.03 7.03 3 12 3M3 12H5M12 3V5M13.32 10.5C12.97 10.19 12.51 10 12 10C10.89 10 10 10.89 10 12C10 13.1 10.89 14 12 14C13.1 14 14 13.1 14 12C14 11.4 13.74 10.87 13.32 10.5ZM13.32 10.5L15.82 8"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              ></path>
-            </svg>
-            Dashboard
-          </a>
+        <li>
+          <a href="index.html"><i class="bi bi-grid-fill"></i> Dashboard</a>
         </li>
         <li>
           <details open>
-            <summary>
-              <svg width="20" height="20" fill="none">
-                <path
-                  d="M7 25V2.005C7 2.005 7 1 8 1H30C30 1 31 1.005 31 2.005V28.005C31 28.005 31 31 28 31H4C4 31 1 31.005 1 27.005V12.005C1 12.005 1 11 2 11H4M13 7H18M13 11H25M13 15H25M13 19H25M13 23H25"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-              My Articles
-            </summary>
+            <summary><i class="bi bi-file-text-fill"></i> My Articles</summary>
             <ul>
               <li>
                 <a href="page/own_article.html" class="menu-active"
@@ -134,52 +123,57 @@
           </details>
         </li>
         <li>
-          <a href="page/categories.html">
-            <svg width="20" height="20" fill="none">
-              <path
-                d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10ZM17 10H19C21 10 22 9 22 7V5C22 3 21 2 19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10ZM17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22ZM5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19C2 21 3 22 5 22Z"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-            Category
-          </a>
-        </li>
-        <li>
-          <a href="page/profile.html">
-            <svg width="20" height="20" fill="none">
-              <path
-                d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-            Profile
-          </a>
+          <a href="page/categories.html"
+            ><i class="bi bi-tags-fill"></i> Category</a
+          >
         </li>
       </ul>
     </aside>
 
     <!-- Main Content -->
     <div class="main-content">
-      <div class="topbar">
+      <!-- Topbar -->
+      <div
+        class="topbar d-flex justify-content-end align-items-center gap-3 p-3"
+      >
         <div class="d-flex flex-column align-items-end">
-          <div class="welcome" id="welcomeMessage">Welcome, .....!</div>
-          <div class="email" id="email">example@gmail.com</div>
+          <div id="welcomeMessage">Welcome, .....!</div>
+          <div id="email">example@gmail.com</div>
         </div>
-        <img class="avatar" id="avatar" src="" />
+        <div class="profile-wrapper">
+          <img id="avatar" class="avatar" src="" onclick="toggleDropdown()" />
+          <div id="profileDropdown" class="profile-dropdown">
+            <a href="page/profile.html"
+              ><i class="bi bi-person"></i> View Profile</a
+            >
+            <a href="#" onclick="logout()"
+              ><i class="bi bi-box-arrow-right"></i> Logout</a
+            >
+          </div>
+        </div>
       </div>
 
+      <!-- Content Section -->
       <div class="content-wrapper">
         <h4>All Articles</h4>
-        <p class="">Browse all published articles</p>
+        <p>Browse all published articles</p>
+
+        <!-- Search Input -->
+        <div class="search-container">
+          <input
+            type="text"
+            id="searchInput"
+            class="search-input"
+            placeholder="Search articles..."
+            oninput="searchArticles()"
+          />
+        </div>
+
+        <!-- Articles Row -->
         <div class="row g-4" id="card-item"></div>
 
-        <div class="text-center mt-5">
+        <!-- Load More -->
+        <div class="d-flex justify-content-center mt-5">
           <button
             id="loadMoreBtn"
             class="btn btn-gradient"
@@ -190,22 +184,27 @@
         </div>
       </div>
     </div>
-    <!-- <a href="page/"></a> -->
 
     <script>
+      const token = localStorage.getItem("token");
+      if (!token || token === "null") window.location.href = "page/login.html";
+
       let currentPage = 1;
       const perPage = 8;
       let totalPages = 1;
+      let currentKeyword = "";
 
-      // ==================PROFILE[START]=======================
-
-      document.addEventListener("DOMContentLoaded", () => {
-        getData(currentPage);
-      });
+      // Load Profile
       fetch("http://blogs.csm.linkpc.net/api/v1/auth/profile", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${token}` },
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 401) {
+            localStorage.removeItem("token");
+            window.location.href = "page/login.html";
+          }
+          return res.json();
+        })
         .then((data) => {
           const profile = data.data;
           document.getElementById(
@@ -214,74 +213,100 @@
           document.getElementById("email").innerText = profile.email;
           document.getElementById("avatar").src =
             profile.avatar || "https://via.placeholder.com/150";
-        })
-        .catch((err) => console.error(err));
-      // ==================PROFILE[END]=======================
+        });
 
-      async function getData(page) {
-        try {
-          const res = await fetch(
-            `http://blogs.csm.linkpc.net/api/v1/articles?_page=${page}&_per_page=${perPage}`
-          );
-          const data = await res.json();
-          const items = data.data.items;
-          totalPages = data.data.meta.totalPages;
-
-          let cardHTML = "";
-
-          items.forEach((article) => {
-            const img = article.thumbnail || "default.jpg";
-
-            let contentText = "";
-            try {
-              const parsed = JSON.parse(article.content);
-              contentText = parsed.ops?.map((op) => op.insert).join("") || "";
-            } catch {
-              contentText = article.content || "";
-            }
-
-            cardHTML += `
-            <div class="col-sm-6 col-md-4 col-lg-3">
-              <div class="card" onclick="openArticle(${article.id})">
-                <img src="${img}" class="card-img-top" alt="Article Image">
-                <div class="card-body">
-                  <h5 class="card-title">${article.title}</h5>
-                  <p class="card-text">${contentText}</p>
-                </div>
-              </div>
-            </div>
-          `;
-          });
-
-          document
-            .getElementById("card-item")
-            .insertAdjacentHTML("beforeend", cardHTML);
-
-          if (currentPage >= totalPages) {
-            document.getElementById("loadMoreBtn").style.display = "none";
-          }
-        } catch (err) {
-          console.error("Fetch error:", err);
-          document.getElementById(
-            "card-item"
-          ).innerHTML = `<div class="text-center text-danger">Failed to load articles.</div>`;
-        }
+      function toggleDropdown() {
+        const drop = document.getElementById("profileDropdown");
+        drop.style.display = drop.style.display === "block" ? "none" : "block";
+      }
+      document.addEventListener("click", (e) => {
+        const avatar = document.getElementById("avatar");
+        const dropdown = document.getElementById("profileDropdown");
+        if (!avatar.contains(e.target) && !dropdown.contains(e.target))
+          dropdown.style.display = "none";
+      });
+      function logout() {
+        localStorage.removeItem("token");
+        window.location.href = "page/login.html";
       }
 
-      function loadMore() {
-        const btn = document.getElementById("loadMoreBtn");
-        btn.innerHTML = "Loading...";
-        btn.disabled = true;
-        currentPage++;
-        getData(currentPage).then(() => {
-          btn.innerHTML = "Load More";
-          btn.disabled = false;
-        });
+      // Render single article card
+      function renderArticleCard(article) {
+        const img = article.thumbnail || "default.jpg";
+        let text = "";
+        try {
+          text =
+            JSON.parse(article.content)
+              .ops?.map((op) => op.insert)
+              .join("") || "";
+        } catch {
+          text = article.content || "";
+        }
+        return `
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="card" onclick="openArticle(${article.id})">
+              <img src="${img}" class="card-img-top"/>
+              <div class="card-body">
+                <h5 class="card-title">${article.title}</h5>
+                <p class="card-text">${text}</p>
+              </div>
+            </div>
+          </div>`;
       }
 
       function openArticle(id) {
         window.location.href = `page/detail.html?id=${id}`;
       }
+
+      async function getData(page = 1, keyword = "") {
+        try {
+          const res = await fetch(
+            `http://blogs.csm.linkpc.net/api/v1/articles?_page=${page}&_per_page=${perPage}&search=${encodeURIComponent(
+              keyword
+            )}&sortBy=createdAt&sortDir=desc`
+          );
+          const data = await res.json();
+          const items = data.data.items;
+          totalPages = data.data.meta.totalPages;
+
+          if (page === 1) document.getElementById("card-item").innerHTML = "";
+
+          items.forEach((article) => {
+            document
+              .getElementById("card-item")
+              .insertAdjacentHTML("beforeend", renderArticleCard(article));
+          });
+
+          document.getElementById("loadMoreBtn").style.display =
+            currentPage >= totalPages ? "none" : "block";
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      function loadMore() {
+        currentPage++;
+        getData(currentPage, currentKeyword);
+      }
+
+      function searchArticles() {
+        currentKeyword = document.getElementById("searchInput").value.trim();
+        currentPage = 1;
+        getData(currentPage, currentKeyword);
+      }
+
+      // Show newly created article on top
+      document.addEventListener("DOMContentLoaded", () => {
+        const newArticle = localStorage.getItem("newArticleCreated");
+        if (newArticle) {
+          const article = JSON.parse(newArticle);
+          document
+            .getElementById("card-item")
+            .insertAdjacentHTML("afterbegin", renderArticleCard(article));
+          localStorage.removeItem("newArticleCreated");
+        }
+        getData(currentPage);
+      });
     </script>
   </body>
 </html>

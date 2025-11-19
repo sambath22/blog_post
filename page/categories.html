@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -73,7 +74,7 @@
       </div>
       <ul class="menu-sidebar">
         <li>
-          <a href="index.html">
+          <a href="../index.html">
             <svg width="24" height="24" fill="none">
               <path
                 d="M21 12C21 16.97 16.97 21 12 21C7.03 21 3 16.97 3 12M21 12C21 7.03 16.97 3 12 3M21 12H19M3 12C3 7.03 7.03 3 12 3M3 12H5M12 3V5M13.32 10.5C12.97 10.19 12.51 10 12 10C10.89 10 10 10.89 10 12C10 13.1 10.89 14 12 14C13.1 14 14 13.1 14 12C14 11.4 13.74 10.87 13.32 10.5ZM13.32 10.5L15.82 8"
@@ -123,21 +124,6 @@
             Category
           </a>
         </li>
-        <li>
-          <a href="../page/profile.html">
-            <svg width="20" height="20" fill="none">
-              <path
-                d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-            Profile
-          </a>
-        </li>
-      </ul>
     </aside>
 
     <!-- Main Content -->
@@ -216,7 +202,6 @@
 
     <script>
       const token = localStorage.getItem("token");
-      let selectedID = null;
       let allCategories = [];
 
       fetch("http://blogs.csm.linkpc.net/api/v1/auth/profile", {

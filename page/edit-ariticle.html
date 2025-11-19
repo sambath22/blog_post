@@ -190,15 +190,12 @@
     </div>
 
     <script>
-      /* =======================
-       TOKEN FROM LOCALSTORAGE
-    ======================== */
+      // ============================
+      // 1. Redirect If Not Logged In
+      // ============================
       const token = localStorage.getItem("token");
-      const articleId = localStorage.getItem("articleEdit");
-
       if (!token) {
-        alert("Missing token. Please login again.");
-        window.location.href = "../login.html";
+        window.location.href = "login.html";
       }
 
       /* =======================
